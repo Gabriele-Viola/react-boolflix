@@ -1,20 +1,7 @@
-import { GlobalContext } from "../contexts/GlobalContext"
-import { useState } from "react"
+import { useContext } from "react"
+import GlobalContexts from "../contexts/GlobalContexts"
 export default function AppHeader() {
-    const [searchMovie, setSearchMovie] = useState('')
-
-    const { allFind, fetchMovies } = GlobalContext
-    console.log('ciao');
-
-    function handleSearch(e) {
-        e.preventDefault(e)
-        console.log(fetchMovies(searchMovie));
-
-        fetchMovies(searchMovie)
-        console.log(allFind);
-
-    }
-
+    const { handleSearch, searchMovie, setSearchMovie } = useContext(GlobalContexts)
     return (
         <header>
             <h1>NettoFlixxo</h1>

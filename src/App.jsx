@@ -1,8 +1,10 @@
 import { useEffect, useState, useContext } from 'react'
-import { GlobalContext } from './contexts/GlobalContext'
+import GlobalContexts from './contexts/GlobalContexts'
 import './App.css'
+import '../node_modules/bootstrap-icons/font/bootstrap-icons.min.css'
 import AppHeader from './components/AppHeader'
 import flags from './data/flags'
+import AppVoteStars from './components/AppVoteStars'
 const APIkey = 'bf3833151ec0112ceeff966557fa120e'
 const APIurlMovie = 'https://api.themoviedb.org/3/search/movie?'
 const APIurlTV = 'https://api.themoviedb.org/3/search/tv?'
@@ -10,6 +12,7 @@ const APIurlImgs = 'https://image.tmdb.org/t/p/w342'
 
 
 function App() {
+
 
   const [searchMovie, setSearchMovie] = useState('')
   const [findMovie, setFindMovie] = useState('')
@@ -43,29 +46,14 @@ function App() {
 
   console.log(allResult);
 
-
   useEffect(fetchDataMovies, [findMovie])
-
-
 
   return (
     <>
-      <GlobalContext.Provider value={{ fetchDataMovies, setAllFindMovies, allFindMovies }}>
-        {/* <AppHeader /> */}
-        <header>
-          <h1>NettoFlixxo</h1>
-          <form onSubmit={handleSearch}>
-            <div className="searchBar"
-              name='searchBox'
-              id='searchBox'
-              placeholder='Search Movies'
-              value={searchMovie}
-              onChange={e => setSearchMovie(e.target.value)}>
-              <input type="search" />
-              <button type='submit' >invia</button>
-            </div>
-          </form>
-        </header>
+      <GlobalContexts.Provider value={{ handleSearch, searchMovie, setSearchMovie }}>
+
+        <AppHeader />
+
 
         {allResult.map(movie =>
 
@@ -80,13 +68,15 @@ function App() {
                 <><img src={`http://localhost:5173/imgs/flags/xx.png`} alt="" /><p>{movie.original_language}</p></>
               }
             </div>
+            <div className="stars">
+              <AppVoteStars vote={movie.vote_average} />
 
-            <p>Vote: {`${Math.ceil((movie.vote_average) / 2)}`}</p>
+            </div>
 
 
           </div>
         )}
-      </GlobalContext.Provider>
+      </GlobalContexts.Provider>
 
     </>
   )
