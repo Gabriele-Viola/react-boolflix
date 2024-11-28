@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react'
 import { GlobalContext } from './contexts/GlobalContext'
 import './App.css'
+import AppHeader from './components/AppHeader'
 const APIkey = 'bf3833151ec0112ceeff966557fa120e'
 const APIurl = 'https://api.themoviedb.org/3/search/movie?'
 
@@ -49,31 +50,34 @@ function App() {
 
   return (
     <>
-      <header>
-        <h1>NettoFlixxo</h1>
-        <form onSubmit={handleSearch}>
-          <div className="searchBar"
-            name='searchBox'
-            id='searchBox'
-            placeholder='Search Movies'
-            value={searchMovie}
-            onChange={e => setSearchMovie(e.target.value)}>
-            <input type="search" />
-            <button type='submit' >invia</button>
+      <GlobalContext.Provider value={{ fetchData, setAllFind, allFind }}>
+        {/* <AppHeader /> */}
+        <header>
+          <h1>NettoFlixxo</h1>
+          <form onSubmit={handleSearch}>
+            <div className="searchBar"
+              name='searchBox'
+              id='searchBox'
+              placeholder='Search Movies'
+              value={searchMovie}
+              onChange={e => setSearchMovie(e.target.value)}>
+              <input type="search" />
+              <button type='submit' >invia</button>
+            </div>
+          </form>
+        </header>
+        {allFind.map(movie =>
+
+          <div key={movie.id} className="card">
+
+            <h3>{movie.title}</h3>
+            <p>{movie.original_title}</p>
+            <p>{movie.original_language}</p>
+            <p>{movie.vote_average}</p>
+
           </div>
-        </form>
-      </header>
-      {allFind.map(movie =>
-
-        <div key={movie.id} className="card">
-
-          <h3>{movie.title}</h3>
-          <p>{movie.original_title}</p>
-          <p>{movie.original_language}</p>
-          <p>{movie.vote_average}</p>
-
-        </div>
-      )}
+        )}
+      </GlobalContext.Provider>
 
     </>
   )

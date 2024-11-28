@@ -1,23 +1,28 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect } from "react";
 
 export const GlobalContext = createContext()
 
-const APIkey = 'bf3833151ec0112ceeff966557fa120e&query='
-const APIurl = 'https://api.themoviedb.org/3/search/movie?api_key='
-
 export const MovieProvider = ({ children }) => {
-    const [movies, setMovies] = useState([])
+    const APIkey = 'bf3833151ec0112ceeff966557fa120e'
+    const APIurl = 'https://api.themoviedb.org/3/search/movie?'
+    const [allFind, setAllFind] = useState([])
 
-    const fetchMovies = (search) => {
-        fetch(`${APIurl}api_key=${APIkey}&query=${search}`)
-            .then(resp = resp.json())
+    const fetchMovies = (movieToFind) => {
+
+
+        fetch(`${APIurl}api_key=${APIkey}&query=${movieToFind}`)
+            .then(resp => resp.json())
             .then(data => {
-                setMovies(data.results)
+                console.log(data.results);
+                setAllFind(data.results)
+
             })
-        return (
-            <GlobalContext.Provider value={{ movies, fetchMovies }}>
-                {children}
-            </GlobalContext.Provider>
-        )
+        useEffect(fetchMovies, [allFind])
     }
+
+    return (
+        <GlobalContext.Provider value={{ allFind, fetchMovies }}>
+            {children}
+        </GlobalContext.Provider>
+    )
 }
