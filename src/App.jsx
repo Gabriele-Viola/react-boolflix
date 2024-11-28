@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from 'react'
 import { GlobalContext } from './contexts/GlobalContext'
 import './App.css'
 import AppHeader from './components/AppHeader'
+import flags from './data/flags'
 const APIkey = 'bf3833151ec0112ceeff966557fa120e'
 const APIurl = 'https://api.themoviedb.org/3/search/movie?'
 
@@ -72,7 +73,10 @@ function App() {
 
             <h3>{movie.title}</h3>
             <p>{movie.original_title}</p>
-            <p>{movie.original_language}</p>
+            <div>
+              language: {flags.includes(movie.original_language) ? <img src={`http://localhost:5173/imgs/flags/${movie.original_language}.png`} alt="" /> : <img src={`http://localhost:5173/imgs/flags/xx.png`} alt="" />}
+            </div>
+            <p>language:{movie.original_language}</p>
             <p>{movie.vote_average}</p>
 
           </div>

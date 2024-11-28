@@ -1,0 +1,1 @@
+export default ['de', 'en', 'us', 'es', 'fr', 'it',]
