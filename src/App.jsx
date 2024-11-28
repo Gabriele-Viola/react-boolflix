@@ -66,38 +66,7 @@ function App() {
             </div>
           </form>
         </header>
-        {/* {allFindMovies.map(movie =>
 
-          <div key={movie.id} className="card">
-
-            <h3>{movie.title}</h3>
-            <p>originalTitle: {movie.original_title}</p>
-            <div>
-              language: {flags.includes(movie.original_language) ? <img src={`http://localhost:5173/imgs/flags/${movie.original_language}.png`} alt="" /> :
-                <><img src={`http://localhost:5173/imgs/flags/xx.png`} alt="" /><p>{movie.original_language}</p></>
-              }
-            </div>
-
-            <p>Vote: {movie.vote_average}</p>
-
-          </div>
-        )}
-        {allFindTV.map(movie =>
-
-          <div key={movie.id} className="card">
-
-            <h3>{movie.title}</h3>
-            <p>originalTitle: {movie.original_title}</p>
-            <div>
-              language: {flags.includes(movie.original_language) ? <img src={`http://localhost:5173/imgs/flags/${movie.original_language}.png`} alt="" /> :
-                <><img src={`http://localhost:5173/imgs/flags/xx.png`} alt="" /><p>{movie.original_language}</p></>
-              }
-            </div>
-
-            <p>Vote: {movie.vote_average}</p>
-
-          </div>
-        )} */}
         {allResult.map(movie =>
 
           <div key={movie.id} className="card">
@@ -112,7 +81,8 @@ function App() {
               }
             </div>
 
-            <p>Vote: {movie.vote_average}</p>
+            <p>Vote: {`${Math.ceil((movie.vote_average) / 2)}`}</p>
+
 
           </div>
         )}
