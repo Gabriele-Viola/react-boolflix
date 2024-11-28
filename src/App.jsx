@@ -28,15 +28,16 @@ function App() {
       .then(resp => resp.json())
       .then(data => {
         console.log(data.results);
-        fetch
+        const film = data.results
         setAllFindMovies(data.results)
         fetch(urlTV)
           .then(resp => (resp.json()))
           .then(data => {
             console.log(data);
+            const serie = data.results
             setAllFindTV(data.results)
+            setAllResult(film.concat(serie))
           })
-        setAllResult(allFindMovies.concat(allFindTV))
       })
   }
 
