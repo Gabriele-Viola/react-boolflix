@@ -4,7 +4,7 @@ import AppVoteStars from "./AppVoteStars";
 
 export default function AppCard({ movie }) {
     const { API_URL_IMG } = useGlobalContext()
-    console.log(API_URL_IMG);
+
 
 
     return (
@@ -12,9 +12,12 @@ export default function AppCard({ movie }) {
 
             <div className="card">
                 <div className="cardImg">
-                    {movie.poste_path ?
-                        <div className='noFound'>no Found</div>
-                        : <img src={`${API_URL_IMG}${movie.poster_path}`} alt="" />}
+                    {movie.poster_path
+                        === null ?
+                        <div className='noFound'><i class="bi bi-x-circle"></i>
+                            <div>No Img</div></div>
+                        : <img src={`${API_URL_IMG}${movie.poster_path}`} alt="" />
+                    }
                 </div>
                 <div className="cardBody">
                     {movie.title ?
