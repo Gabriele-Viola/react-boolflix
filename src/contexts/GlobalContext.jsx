@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 const GlobalContext = createContext()
 
 function GlobalContextProvider({ children }) {
@@ -7,11 +7,38 @@ function GlobalContextProvider({ children }) {
     const API_URL_IMG = 'https://image.tmdb.org/t/p/w342'
     const APIurlMovie = 'https://api.themoviedb.org/3/search/movie?'
     const APIurlTV = 'https://api.themoviedb.org/3/search/tv?'
+    const API_URL_POPOLAR = 'https://api.themoviedb.org/3/movie/popular?'
+    const URL_POPULAR = `${API_URL_POPOLAR}api_key=${APIkey}`
     const URL_TV = `${APIurlTV}api_key=${APIkey}&query=${searchMovie}`
     const URL_MOVIE = `${APIurlMovie}api_key=${APIkey}&query=${searchMovie}`
     const [allFindTV, setAllFindTV] = useState([])
     const [allFindMovies, setAllFindMovies] = useState([])
     const [allResult, setAllResult] = useState([])
+    const [cast, setCast] = useState({})
+
+
+    useEffect(() => {
+        fetch(URL_POPULAR)
+            .then((res => res.json()))
+            .then(data => {
+
+                setAllResult(data.results);
+            });
+
+    }, [])
+
+    function getCast(url) {
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                setCast(data.cast)
+                console.log('hi there');
+
+            })
+
+    }
+    useEffect(getCast, [cast])
+
 
     function handleSearch(e) {
         e.preventDefault()
@@ -25,7 +52,7 @@ function GlobalContextProvider({ children }) {
                 fetch(`${URL_TV}api_key=${APIkey}&query=${searchMovie}`)
                     .then(resp => (resp.json()))
                     .then(data => {
-                        console.log(data.results);
+                        console.log(data);
                         const serie = data.results
                         setAllFindTV(data.results)
                         setAllResult(film.concat(serie))
@@ -33,6 +60,7 @@ function GlobalContextProvider({ children }) {
             })
 
     }
+
 
     const values = {
         API_URL_IMG,
@@ -45,7 +73,9 @@ function GlobalContextProvider({ children }) {
         setAllFindMovies,
         allFindTV,
         setAllFindTV, searchMovie, setSearchMovie,
-
+        APIkey,
+        cast, setCast,
+        getCast
     }
 
     return (

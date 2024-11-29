@@ -1,11 +1,16 @@
+import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import flags from "../data/flags";
 import AppVoteStars from "./AppVoteStars";
 
 export default function AppCard({ movie }) {
-    const { API_URL_IMG } = useGlobalContext()
+    const { API_URL_IMG, APIkey, cast, setCast, getCast } = useGlobalContext()
+    const [idItem, setIdItem] = useState(movie.id)
+    const URL_CAST = `https://api.themoviedb.org/3/movie/${idItem}/credits?api_key=${APIkey}`
+    console.log(URL_CAST);
 
 
+    // getCast(URL_CAST)
 
     return (
         <div className="col-3">
