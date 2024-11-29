@@ -1,8 +1,8 @@
 import nettoflixxo from '/imgs/nettoflixxo.png'
-import { useContext } from "react"
-import GlobalContexts from "../contexts/GlobalContexts"
+import { useGlobalContext } from "../contexts/GlobalContext"
 export default function AppHeader() {
-    const { handleSearch, searchMovie, setSearchMovie } = useContext(GlobalContexts)
+    const { handleSearch, setSearchMovie, searchMovie } = useGlobalContext()
+
     return (
         <header>
             <div className="containerHeader">
