@@ -4,7 +4,7 @@ const GlobalContext = createContext()
 function GlobalContextProvider({ children }) {
     const [searchMovie, setSearchMovie] = useState('')
     const APIkey = import.meta.env.VITE_API_KEY
-    const APIurlImgs = 'https://image.tmdb.org/t/p/w342'
+    const API_URL_IMG = 'https://image.tmdb.org/t/p/w342'
     const APIurlMovie = 'https://api.themoviedb.org/3/search/movie?'
     const APIurlTV = 'https://api.themoviedb.org/3/search/tv?'
     const URL_TV = `${APIurlTV}api_key=${APIkey}&query=${searchMovie}`
@@ -22,10 +22,10 @@ function GlobalContextProvider({ children }) {
                 console.log(data.results);
                 const film = data.results
                 setAllFindMovies(data.results)
-                fetch(`${URL_TV}api_key = ${APIkey} & query=${searchMovie}`)
+                fetch(`${URL_TV}api_key=${APIkey}&query=${searchMovie}`)
                     .then(resp => (resp.json()))
                     .then(data => {
-                        console.log(data);
+                        console.log(data.results);
                         const serie = data.results
                         setAllFindTV(data.results)
                         setAllResult(film.concat(serie))
@@ -35,7 +35,7 @@ function GlobalContextProvider({ children }) {
     }
 
     const values = {
-        APIurlImgs,
+        API_URL_IMG,
         URL_TV,
         URL_MOVIE,
         handleSearch,
