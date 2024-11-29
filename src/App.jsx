@@ -53,29 +53,43 @@ function App() {
       <GlobalContexts.Provider value={{ handleSearch, searchMovie, setSearchMovie }}>
 
         <AppHeader />
+        <main>
+
+          <div className="container">
+            <div className="row">
 
 
-        {allResult.map(movie =>
+              {allResult.map(movie =>
+                <div className="col-3">
 
-          <div key={movie.id} className="card">
+                  <div key={movie.id} className="card">
+                    <div className="cardImg">
 
-            {movie.title ? <h3>{movie.title}</h3> : <h3>{movie.name}</h3>}
-            <img src={`${APIurlImgs}${movie.poster_path}`} alt="" />
+                      {!movie.poste_path ? <img src={`${APIurlImgs}${movie.poster_path}`} alt="" /> : <div className='noFound'>no Found</div>}
+                    </div>
+                    <div className="cardBody">
+                      {movie.title ? <div className='title'> <strong>Title:</strong> {movie.title}</div> : <div className='title'><strong>Title:</strong> {movie.name}</div>}
 
-            {movie.original_title ? <p>original movie Title: {movie.original_title}</p> : <p>original TV name: {movie.original_name}</p>}
-            <div>
-              language: {flags.includes(movie.original_language) ? <img src={`http://localhost:5173/imgs/flags/${movie.original_language}.png`} alt="" /> :
-                <><img src={`http://localhost:5173/imgs/flags/xx.png`} alt="" /><p>{movie.original_language}</p></>
-              }
+                      {movie.original_title ? <div className='originalN'><strong>Original movie Title: </strong> {movie.original_title}</div> : <div className='originalN'> <strong strong > Original TV name:  </strong > {movie.original_name}</ div>}
+                      <div className='overview'><strong>Overviw: </strong>{movie.overview}</div>
+                      <div className='language'>
+                        language: {flags.includes(movie.original_language) ? <img src={`http://localhost:5173/imgs/flags/${movie.original_language}.png`} alt="" /> :
+                          <><img src={`http://localhost:5173/imgs/flags/xx.png`} alt="" /><p>{movie.original_language}</p></>
+                        }
+                      </div>
+                      <div className="stars">
+                        <AppVoteStars vote={movie.vote_average} />
+
+                      </div>
+                    </div>
+
+
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="stars">
-              <AppVoteStars vote={movie.vote_average} />
-
-            </div>
-
-
           </div>
-        )}
+        </main>
       </GlobalContexts.Provider>
 
     </>
@@ -83,3 +97,6 @@ function App() {
 }
 
 export default App
+
+
+
