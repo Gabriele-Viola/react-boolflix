@@ -14,7 +14,8 @@ function GlobalContextProvider({ children }) {
     const [allFindTV, setAllFindTV] = useState([])
     const [allFindMovies, setAllFindMovies] = useState([])
     const [allResult, setAllResult] = useState([])
-    const [cast, setCast] = useState({})
+    const [cast, setCast] = useState('')
+    const [castId, setCastId] = useState('')
 
 
     useEffect(() => {
@@ -29,15 +30,20 @@ function GlobalContextProvider({ children }) {
 
     function getCast(url) {
         fetch(url)
-            .then(res => res.json())
+            .then(resp => resp.json())
             .then(data => {
-                setCast(data.cast)
-                console.log('hi there');
+                // console.log(data);
+                const castFive = data.cast.slice(0, 5).map(actor => actor.name)
+                const ppum = cast.slice(0, 4)
+                console.log(castFive);
+
+                setCast(castFive)
+                // setCastId(data.id)
 
             })
 
     }
-    useEffect(getCast, [cast])
+    useEffect(getCast, [])
 
 
     function handleSearch(e) {
@@ -74,8 +80,11 @@ function GlobalContextProvider({ children }) {
         allFindTV,
         setAllFindTV, searchMovie, setSearchMovie,
         APIkey,
-        cast, setCast,
-        getCast
+        cast,
+        setCast,
+        getCast,
+        castId,
+
     }
 
     return (
